@@ -1,26 +1,47 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import _ from 'lodash';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 
 const students = [
-  {id: 12,name: 'Janekit', score: 23 },
-  {id: 18,name: 'Juai', score: 27 },
-  {id: 20,name: 'JJ', score: 22 }
+  {id: '12', name: 'Janekit ', score: 23},
+  {id: '18', name: 'Juai', score: 27},
+  {id: '20', name: 'JJ', score: 22}
 ]
 
-const StudentLine = (props) =>(
-  <div>{props.id} {props.name} = {props.score}</div>
+const Home = () => (<div>Home</div>)
+const Students = () => (
+  <div>
+    {
+      _.map(students, student => <StudentLink {...student} key={student.id}/>)
+    }
+    <Route path="/students/:id" component={StudentContainer}/>
+  </div>
+)
+const StudentContainer = ({match}) => {
+  let s = _.find(students, ['id', match.params.id])
+  return (
+    <StudentLine {...students} key={students.id}/>
+  )
+}
+const StudentLink = ({id, name}) => (
+  <div><Link to={`/students/${id}`}>{name}</Link></div>
+)
+const StudentLine = ({id, name, score}) => (
+  <div>{id} {name} = {score}</div>
 )
 class App extends Component {
   render() {
     return (
-      <div>
-        {
-          _.map(students,student => <StudentLine {...student} key={student.id}/>)
-        }
-      </div>
-
+      <Router>
+        <div>
+          <Route exact path="/" component={Home}/>
+          <Route path="/students" component={Students}/> 
+        </div>       
+      </Router>
     );
   }
 }
