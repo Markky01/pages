@@ -1,19 +1,26 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import _ from 'lodash';
 
+const students = [
+  {id: 12,name: 'Janekit', score: 23 },
+  {id: 18,name: 'Juai', score: 27 },
+  {id: 20,name: 'JJ', score: 22 }
+]
+
+const StudentLine = (props) =>(
+  <div>{props.id} {props.name} = {props.score}</div>
+)
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        {
+          _.map(students,student => <StudentLine {...student} key={student.id}/>)
+        }
       </div>
+
     );
   }
 }
