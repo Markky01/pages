@@ -12,7 +12,18 @@ const students = [
   {id: '20', name: 'JJ', score: 22}
 ]
 
-const Home = () => (<div>Home</div>)
+const Home = () => (
+    <Router>
+      <div>
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/students">Students</Link></li>
+        </ul>
+        <Route path="/students" component={Students}/>
+      </div>
+      
+    </Router>
+)
 const Students = () => (
   <div>
     {
@@ -24,7 +35,7 @@ const Students = () => (
 const StudentContainer = ({match}) => {
   let s = _.find(students, ['id', match.params.id])
   return (
-    <StudentLine {...students} key={students.id}/>
+    <StudentLine {...s} key={s.id}/>
   )
 }
 const StudentLink = ({id, name}) => (
